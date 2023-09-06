@@ -1,0 +1,39 @@
+
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20" class="page">
+  <mat-toolbar color="primary">
+    <span>Codeforces ladder</span>
+  </mat-toolbar>
+  <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+  <div *ngIf="!loading" class="p-20">
+    <div fxLayout="row" fxLayoutAlign="start center" class=" header font-size-16 font-weight-500 py-4 pl-4">
+      <span fxFlex="5">id</span>
+      <span fxFlex="10">Contest ID</span>
+      <span fxFlex="10">Index</span>
+      <span fxFlex="15">Name</span>
+      <span fxFlex="35">Tag(s)</span>
+      <span fxFlex="10">Points</span>
+      <span fxFlex="10">Solved By</span>
+      <span fxFlex="5">Link</span>
+    </div>
+    <mat-divider></mat-divider>
+    <ng-container *ngFor="let problem of problemSet; let i = index">
+      <div fxLayout="row" fxLayoutAlign="start center" class="py-8 pl-4 font-size-14 font-weight-400 row">
+        <span fxFlex="5"> {{i + 1}} </span>
+        <span fxFlex="10"> {{problem.id}} </span>
+        <span fxFlex="10"> {{problem.index}} </span>
+        <span fxFlex="15"> {{problem.name}} </span>
+        <span fxFlex="35"> {{problem.tags}} </span>
+        <span fxFlex="10"> {{problem.points || '--'}} </span>
+        <span fxFlex="10"> {{problem.solveCount}} </span>
+        <span fxFlex="5" class="cursor-pointer" (click)="openLink(problem.link)">
+          <mat-icon color="primary">open_in_new</mat-icon>
+        </span>
+      </div>
+      <mat-divider></mat-divider>
+    </ng-container>
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-8 px-4">
+      <button [disabled]="pageNumber === 1" mat-raised-button color="primary" (click)="getNextPage(-1)">Previous</button>
+      <button [disabled]="problemSet.length < 15" mat-raised-button color="primary" (click)="getNextPage(1)">Next</button>
+    </div>
+  </div>
+</div>

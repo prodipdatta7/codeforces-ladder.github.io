@@ -19,7 +19,6 @@ export class FilterComponent implements OnInit {
     orderBy: new FormControl(),
   });
   tagList = TAGS;
-  constructor() {}
 
   ngOnInit(): void {
     this.initForm();
@@ -33,6 +32,10 @@ export class FilterComponent implements OnInit {
     this.Maxpoints.setValue(null);
     this.SortOrder.setValue(null);
     this.OrderBy.setValue(null);
+  }
+
+  allEmpty() {
+    return !this.ContestId.value && !this.Index.value && !this.Maxpoints.value && (!this.Tags.value || !this.Tags.value.length) && !this.SortOrder.value ;
   }
 
   get ContestId(): FormControl {
@@ -59,6 +62,7 @@ export class FilterComponent implements OnInit {
 
   isDisabled(): boolean {
     return (
+      this.allEmpty() ||
       ((this.Minpoints?.value || this.Maxpoints?.value) &&
         !(this.Minpoints?.value && this.Maxpoints?.value)) ||
       ((this.SortOrder?.value || this.OrderBy?.value) &&

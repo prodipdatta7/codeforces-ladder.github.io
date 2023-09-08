@@ -1,3 +1,7 @@
+.fix-height {
+  height: calc(100vh - 202px);
+  overflow: auto;
+}
 .row {
   &:hover {
     background-color: aliceblue;
@@ -5,4 +9,36 @@
 }
 .page {
   font-family: 'Poppins', sans-serif;
+}
+
+.A {
+  color: gray
+}
+
+.B {
+  color: green;
+}
+
+.C {
+  color: #27bdbd;
+}
+
+.D {
+  color: blue;
+}
+
+.E {
+  color: violet;
+}
+
+.F, .G{
+  color: orange;
+}
+
+.H, .I, .J, .K, .L, .M, .N, .O, .P {
+  color: red;
+}
+
+.row > span {
+  font-weight: 500;
 }

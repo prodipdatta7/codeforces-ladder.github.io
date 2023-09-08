@@ -1,9 +1,9 @@
 export interface Problem {
-  id: number;
+  contestId: number;
   index: string;
   name: string;
+  tags: string[];
   points: number;
-  tags: string;
   solveCount: number;
   link: string;
   isSolved?:boolean;

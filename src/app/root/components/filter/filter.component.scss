@@ -1,0 +1,13 @@
+.fix-height {
+  height: calc(100vh - 88px);
+}
+
+::ng-deep .tagList {
+  &.mat-select-panel {
+    width: 240px !important;
+    max-width: 240px !important;
+    min-width: calc(100% + 18px) !important;
+    margin-top: 44px !important;
+    margin-left: 30px !important;
+  }
+}

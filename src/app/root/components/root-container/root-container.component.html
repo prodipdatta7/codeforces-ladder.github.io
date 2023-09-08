@@ -1,39 +1,63 @@
 
-<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20" class="page">
-  <mat-toolbar color="primary">
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20" class="page w-100-p">
+  <mat-toolbar color="primary" fxLayoutAlign="space-between center">
     <span>Codeforces ladder</span>
+    <div>
+      <button mat-button color="accent" (click)="toggleView()">
+        <span *ngIf="viewFilter">{{'Close Filter' | uppercase}}</span>
+        <span *ngIf="!viewFilter">{{'Open Filter' | uppercase}}</span>
+      </button>
+    </div>
   </mat-toolbar>
   <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-  <div *ngIf="!loading" class="p-20">
-    <div fxLayout="row" fxLayoutAlign="start center" class=" header font-size-16 font-weight-500 py-4 pl-4">
-      <span fxFlex="5">id</span>
-      <span fxFlex="10">Contest ID</span>
-      <span fxFlex="10">Index</span>
-      <span fxFlex="15">Name</span>
-      <span fxFlex="35">Tag(s)</span>
-      <span fxFlex="10">Points</span>
-      <span fxFlex="10">Solved By</span>
-      <span fxFlex="5">Link</span>
-    </div>
-    <mat-divider></mat-divider>
-    <ng-container *ngFor="let problem of problemSet; let i = index">
-      <div fxLayout="row" fxLayoutAlign="start center" class="py-8 pl-4 font-size-14 font-weight-400 row">
-        <span fxFlex="5"> {{i + 1}} </span>
-        <span fxFlex="10"> {{problem.id}} </span>
-        <span fxFlex="10"> {{problem.index}} </span>
-        <span fxFlex="15"> {{problem.name}} </span>
-        <span fxFlex="35"> {{problem.tags}} </span>
-        <span fxFlex="10"> {{problem.points || '--'}} </span>
-        <span fxFlex="10"> {{problem.solveCount}} </span>
-        <span fxFlex="5" class="cursor-pointer" (click)="openLink(problem.link)">
-          <mat-icon color="primary">open_in_new</mat-icon>
-        </span>
+  <div fxFlex="100" fxLayout="row">
+    <div fxFlex="100" class="px-12">
+      <div *ngIf="!loading; else loader" class="p-20 mat-elevation-z2">
+        <div fxLayout="row" fxLayoutAlign="start center" class=" header font-size-16 font-weight-500 py-4 pl-4">
+          <span fxFlex="5">id</span>
+          <span fxFlex="10">Contest ID</span>
+          <span fxFlex="10">Index</span>
+          <span fxFlex="15">Name</span>
+          <span fxFlex="35">Tag(s)</span>
+          <span fxFlex="10">Points</span>
+          <span fxFlex="10">Solved By</span>
+          <span fxFlex="5">Link</span>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="fix-height">
+          <ng-container *ngFor="let problem of problemSet; let i = index">
+            <div fxLayout="row" fxLayoutAlign="start center" class="py-8 pl-4 font-size-14 font-weight-400 row">
+              <span fxFlex="5"> {{i + 1}} </span>
+              <span fxFlex="10"> {{problem.contestId}} </span>
+              <span fxFlex="10"> {{problem.index}} </span>
+              <span fxFlex="15" [class]="problem.index"> {{problem.name}} </span>
+              <mat-chip-list fxFlex="35">
+                <ng-container *ngFor="let tag of problem.tags">
+                  <mat-chip> {{tag}} </mat-chip>
+                </ng-container>
+              </mat-chip-list>
+              <span fxFlex="10"> {{problem.points || '--'}} </span>
+              <span fxFlex="10"> {{problem.solveCount}} </span>
+              <button mat-icon-button (click)="openLink(problem)">
+                <mat-icon color="primary">open_in_new</mat-icon>
+              </button>
+            </div>
+            <mat-divider></mat-divider>
+          </ng-container>
+        </div>
+        <mat-divider></mat-divider>
+        <div *ngIf="allProblems.length > 5" fxLayout="row" fxLayoutAlign="end center" class="mt-8 px-4">
+          <app-paginator [pageOptions]="[5, 10, 15, 20, 30, 50, 100]" [totalSize]="allProblems.length" [pageSize]="15"
+            [pageNumber]="1" (onPageNumberChange)="getPageNumberChangeEvent($event)" (onPageSizeChange)="getPageSizeChangeEvent($event)">
+          </app-paginator>
+        </div>
       </div>
-      <mat-divider></mat-divider>
-    </ng-container>
-    <div fxLayout="row" fxLayoutAlign="space-between center" class="mt-8 px-4">
-      <button [disabled]="pageNumber === 1" mat-raised-button color="primary" (click)="getNextPage(-1)">Previous</button>
-      <button [disabled]="problemSet.length < 15" mat-raised-button color="primary" (click)="getNextPage(1)">Next</button>
+      <ng-template #loader>
+        <app-loader-view></app-loader-view>
+      </ng-template>
+    </div>
+    <div [@openClose]="viewFilter ? 'open' : 'close'" class="px-12">
+      <app-filter (onFilterApplied)="filterBy($event)"></app-filter>
     </div>
   </div>
 </div>

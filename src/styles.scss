@@ -12,12 +12,6 @@ body {
   font-family: 'Poppins', "Helvetica Neue", sans-serif !important;
 }
 
-
-
-.p-20 {
-  padding: 20px !important;
-}
-
 .cursor-pointer {
   cursor: pointer;
 }
@@ -64,4 +58,9 @@ body {
 
 .font-weight-700 {
   font-weight: 700 !important;
+}
+
+::-webkit-scrollbar {
+  visibility: hidden;
+  width: 0 !important;
 }

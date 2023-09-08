@@ -1,0 +1,86 @@
+<div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="20px" class=" mat-elevation-z2 p-12">
+  <div fxLayoutAlign="start center">
+    <span class="font-size-16 font-weight-600">FILTER</span>
+  </div>
+  <mat-divider></mat-divider>
+  <form [formGroup]="filterForm">
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxLayout="column" fxFlex="50">
+        <span>Contest ID</span>
+        <mat-form-field appearance="outline">
+          <mat-label>Contest ID</mat-label>
+          <input matInput type="number" formControlName="contestId">
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="50">
+        <span>Index</span>
+        <mat-form-field appearance="outline">
+          <mat-label>Index</mat-label>
+          <mat-select formControlName="index">
+            <mat-option [value]="index"
+              *ngFor="let index of ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P']">
+              {{index}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <span>Points</span>
+    </div>
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxLayout="column" fxFlex="50">
+        <mat-form-field appearance="outline">
+          <mat-label>min</mat-label>
+          <input matInput type="number" formControlName="minpoints">
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="50">
+        <mat-form-field appearance="outline">
+          <mat-label>max</mat-label>
+          <input matInput type="number" formControlName="maxpoints">
+        </mat-form-field>
+      </div>
+    </div>
+    <div fxLayout="column">
+      <span>Tag(s)</span>
+      <mat-form-field appearance="outline" class="tagContainer">
+        <mat-label>Tag</mat-label>
+        <mat-select panelClass="tagList" multiple="true" formControlName="tags">
+          <mat-option *ngFor="let tag of tagList">
+            <span> {{tag}}</span>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div>
+      <span>Sorted By</span>
+    </div>
+    <div fxLayout="row" fxLayoutGap="8px">
+      <div fxLayout="column" fxFlex="30">
+        <mat-form-field appearance="outline">
+          <mat-label>order</mat-label>
+          <mat-select panelClass="order" formControlName="sortOrder">
+            <mat-option value="asc">asc.</mat-option>
+            <mat-option value="desc">desc.</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxFlex="70">
+        <mat-form-field appearance="outline">
+          <mat-label>field</mat-label>
+          <mat-select panelClass="field" formControlName="orderBy">
+            <mat-option value="contestId">Contest Id</mat-option>
+            <mat-option value="index">Index</mat-option>
+            <mat-option value="points">Points</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+  <div fxLayoutAlign="space-between center" class="w-100-p" fxFlexAlign="end" style="margin-top: auto;">
+    <button mat-stroked-button color="warn" (click)="initForm()">RESET FILTER</button>
+    <button [disabled]="isDisabled()"
+      mat-raised-button color="primary" (click)="FilterApplied()"> APPLY FILTER</button>
+  </div>
+</div>

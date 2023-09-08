@@ -1,0 +1,44 @@
+<div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="6px">
+  <span> {{'Items per page'}}</span>
+  <form [formGroup]="paginatorForm" class="h-40">
+    <mat-form-field appearance="outline" class="pt-2">
+      <input matInput [matAutocomplete]="pagination" formControlName="paginator">
+      <mat-autocomplete #pagination="matAutocomplete" (optionSelected)="pageSizeChage($event)">
+        <mat-option *ngFor="let option of pageOptions" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  <button mat-icon-button color="primary" matTooltip="First page">
+    <mat-icon (click)="pageChanged(1)">first_page</mat-icon>
+  </button>
+  <button mat-icon-button [disabled]="pageNumber === 1" matTooltip="previous page">
+    <mat-icon (click)="pageBack()">arrow_left</mat-icon>
+  </button>
+  <ng-container *ngIf="pageNumber + 4 >= totalPages; else fullView">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="options">
+      <span class="selected" (click)="onSelectPage(pageNumber)"> {{pageNumber}} </span>
+      <span *ngIf="pageNumber + 1 <= totalPages" (click)="onSelectPage(pageNumber + 1)"> {{pageNumber + 1}} </span>
+      <span *ngIf="pageNumber + 2 <= totalPages" (click)="onSelectPage(pageNumber + 2)"> {{pageNumber + 2}} </span>
+      <span *ngIf="pageNumber + 3 <= totalPages" (click)="onSelectPage(totalPages + 3)"> {{totalPages + 3}} </span>
+      <span *ngIf="pageNumber + 4 <= totalPages" (click)="onSelectPage(totalPages + 4)"> {{totalPages + 4}} </span>
+    </div>
+  </ng-container>
+  <ng-template #fullView>
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px" class="options">
+      <span class="selected" (click)="onSelectPage(pageNumber)"> {{pageNumber}} </span>
+      <span (click)="onSelectPage(pageNumber + 1)"> {{pageNumber + 1}} </span>
+      <span (click)="onSelectPage(pageNumber + 2)"> {{pageNumber + 2}} </span>
+      <span>...</span>
+      <span (click)="onSelectPage(totalPages - 1)"> {{totalPages - 1}} </span>
+      <span (click)="onSelectPage(totalPages)"> {{totalPages}} </span>
+    </div>
+  </ng-template>
+  <button mat-icon-button [disabled]="pageNumber === totalPages" matTooltip="next page">
+    <mat-icon (click)="pageNext()">arrow_right</mat-icon>
+  </button>
+  <button mat-icon-button color="primary" matTooltip="Last page">
+    <mat-icon (click)="pageChanged(totalPages)">last_page</mat-icon>
+  </button>
+</div>

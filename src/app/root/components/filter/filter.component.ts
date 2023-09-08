@@ -35,7 +35,13 @@ export class FilterComponent implements OnInit {
   }
 
   allEmpty() {
-    return !this.ContestId.value && !this.Index.value && !this.Maxpoints.value && (!this.Tags.value || !this.Tags.value.length) && !this.SortOrder.value ;
+    return (
+      !this.ContestId.value &&
+      !this.Index.value &&
+      !this.Maxpoints.value &&
+      !this.Tags?.value?.length &&
+      !this.SortOrder.value
+    );
   }
 
   get ContestId(): FormControl {
@@ -70,8 +76,14 @@ export class FilterComponent implements OnInit {
     );
   }
 
+  resetForm() {
+    this.initForm() ;
+    this.FilterApplied() ;
+  }
+
   FilterApplied() {
     const filterValue = this.filterForm.value;
+    debugger;
     if (this.Minpoints?.value && this.Maxpoints?.value) {
       if (this.Minpoints?.value > this.Maxpoints?.value) {
         this.Maxpoints.setValue(this.Minpoints.value);

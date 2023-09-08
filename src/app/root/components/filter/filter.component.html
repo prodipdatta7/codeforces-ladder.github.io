@@ -47,7 +47,7 @@
       <mat-form-field appearance="outline" class="tagContainer">
         <mat-label>Tag</mat-label>
         <mat-select panelClass="tagList" multiple="true" formControlName="tags">
-          <mat-option *ngFor="let tag of tagList">
+          <mat-option *ngFor="let tag of tagList" [value]="tag">
             <span> {{tag}}</span>
           </mat-option>
         </mat-select>
@@ -79,7 +79,7 @@
     </div>
   </form>
   <div fxLayoutAlign="space-between center" class="w-100-p" fxFlexAlign="end" style="margin-top: auto;">
-    <button mat-stroked-button color="warn" (click)="initForm()">RESET FILTER</button>
+    <button mat-stroked-button color="warn" (click)="resetForm()">RESET FILTER</button>
     <button [disabled]="isDisabled()"
       mat-raised-button color="primary" (click)="FilterApplied()"> APPLY FILTER</button>
   </div>
